@@ -1,0 +1,36 @@
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+print <<"";
+<svg xmlns="http://www.w3.org/2000/svg">
+
+my $l = 10;
+my $s = 0.66;
+my $a1 = 10;
+my $a2 = -80;
+my $depth = 10;
+
+sub group
+{
+	my $level = shift;
+	print qq{<line x1="0" y1="0" x2="0" y2="$l" stroke="black" stroke-width="1"/>\n};
+	return if $level == 0;
+
+	print qq{<g transform="translate(0 $l) scale($s) rotate($a1)">\n};
+	group($level-1);
+	print "</g>\n";
+
+	print qq{<g transform="translate(0 $l) scale($s) rotate($a2)">\n};
+	group($level-1);
+	print "</g>\n";
+
+}
+
+
+group($depth);
+
+print <<"";
+</svg>
+
+__END__
